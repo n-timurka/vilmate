@@ -13,14 +13,18 @@ export default {
   addListing (data) {
     let fd = new FormData()
     for (let key in data.attributes) {
-      fd.append(key, data.attributes[key])
+      if (data.attributes[key] != null) {
+        fd.append(key, data.attributes[key])
+      }
     }
     return Api().post('listings', fd, { headers: { 'Content-Type': 'multipart/form-data' } })
   },
   editListing (data) {
     let fd = new FormData()
     for (let key in data.attributes) {
-      fd.append(key, data.attributes[key])
+      if (data.attributes[key] != null) {
+        fd.append(key, data.attributes[key])
+      }
     }
     return Api().post('listings/' + data.id, fd, { headers: { 'Content-Type': 'multipart/form-data' } })
   }

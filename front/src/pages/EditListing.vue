@@ -7,6 +7,7 @@
       :errors="errors"
       @submit="editListing"
       @setErrors="setErrors"
+      @updateContact="updateContact"
       title="Edit Listing"/>
   </main>
 </template>
@@ -45,6 +46,11 @@ export default {
   methods: {
     setErrors: function (errors) {
       this.errors = errors
+    },
+    updateContact: function (contact) {
+      this.listing.attributes.name = contact.name
+      this.listing.attributes.email = contact.email
+      this.listing.attributes.phone = contact.phone
     },
     editListing: function () {
       this.errors = {}

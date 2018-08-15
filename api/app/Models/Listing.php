@@ -18,5 +18,5 @@ class Listing extends Model
      *
      * @var array
      */
-    protected $fillable = ['title', 'area', 'price', 'address', 'name', 'email', 'phone', 'photo', 'lat', 'lng'];
+    protected $fillable = ['title', 'area', 'price', 'country', 'city', 'postal', 'address', 'name', 'email', 'phone', 'photo', 'lat', 'lng'];
 }

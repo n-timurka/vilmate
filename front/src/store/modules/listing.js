@@ -10,6 +10,9 @@ const state = {
       title: '',
       price: '',
       area: '',
+      country: '',
+      city: '',
+      postal: '',
       address: '',
       lat: null,
       lng: null,
@@ -34,6 +37,15 @@ const getters = {
   },
   getLoading () {
     return state.loading
+  },
+  getContacts () {
+    return state.all.map(listing => {
+      return {
+        name: listing.attributes.name,
+        email: listing.attributes.email,
+        phone: listing.attributes.phone
+      }
+    })
   }
 }
 

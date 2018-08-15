@@ -8,7 +8,7 @@ To set up this application just clone it and run docker command
 `docker-compose up`  
 
 ### API  
-For the Laravel part you need to copy the `.env.example` file to `.env` like usual and copy DB file `cp database/database.sqlite.example database/database.sqlite`.  
+For the Laravel part you need to copy the `.env.example` file to `.env` like usual and create DB file `database/database.sqlite`.  
 Run `composer install` to install dependencies and that should be it for the app.  
 After that you need to generate key `php artisan key:generate` and run a migrations `php artisan migrate`
    
@@ -21,7 +21,8 @@ API endpoints:
 - `http://api.local:8000/api/listings/{id} POST` - Update listing
 - `http://api.local:8000/api/listings/{id} DELETE` - Delete listing
 
-### Frontend    
+### Frontend  
+Docker compose doesn't include frontend part, so it should run separately    
 - `cd front`
 - `npm install`
 - `npm run dev`  

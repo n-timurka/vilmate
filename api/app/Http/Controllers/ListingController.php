@@ -2,101 +2,58 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Listing;
-use Illuminate\Http\Request;
-use App\Http\Resources\ListingResource;
-use App\Http\Resources\ListingsResource;
-use Log;
+use App\Services\ListingService;
+use App\Http\Requests\ListingRequest;
 
 class ListingController extends Controller {
 
     /**
-     * Validation rules
+     * Service object
      * 
-     * @var string 
+     * @var ListingService 
      */
-    private $rules;
+    private $service;
     
     /**
      * Clear wrapping from resources
      */
-    public function __construct() {
-        ListingResource::withoutWrapping();
-        $this->rules = [
-            'title' => 'required|min:4|max:255',
-            'area' => 'required|numeric',
-            'price' => 'required|numeric',
-            'address' => 'required|string',
-            'name' => 'required|string',
-            'email' => 'present|email',
-            'phone' => 'present',
-            'file' => 'nullable|file|image',
-        ];
+    public function __construct(ListingService $service) {
+        $this->service = $service;       
     }
 
     /**
      * Display a listing of the resource.
-     *
-     * @return ListingsResource
      */
-    public function index(): ListingsResource {
-        return new ListingsResource(Listing::orderBy('id', 'desc')->get());
+    public function index() {
+        return $this->service->all();
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return ListingResource
+     * @param  ListingRequest  $request
      */
-    public function store(Request $request): ListingResource {
-        $request->validate($this->rules);
-        $listing = Listing::create($request->all());
-        if($request->file('file')) {
-            $listing->photo = $request->file('file')->store('images', 'public');
-            unset($listing->file);
-        }         
-        $listing->save();
-        return new ListingResource($listing);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Listing  $listing
-     * @return ListingResource
-     */
-    public function show(Listing $listing): ListingResource {
-        return new ListingResource($listing);
+    public function store(ListingRequest $request) {
+        return $this->service->store($request);
     }
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Listing  $listing
-     * @return ListingResource
+     * 
+     * @param  ListingRequest  $request
+     * @param  int
      */
-    public function update(Request $request, Listing $listing): ListingResource {
-        $request->validate($this->rules);
-        $data = $request->all();
-        if($request->file('file')) {
-            $data['photo'] = $request->file('file')->store('images', 'public');
-            unset($data['file']);
-        }         
-        $listing->update($data);
-        return new ListingResource($listing);
+    public function update(ListingRequest $request, int $listing) {
+        return $this->service->update($request, $listing); 
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Listing  $listing
-     * @return ListingResource
+     * @param  int  $listing
      */
-    public function destroy(Listing $listing): ListingResource {
-        $listing->delete();
-        return new ListingResource($listing);
+    public function destroy(int $listing) {
+        return $this->service->delete($listing);        
     }
 
 }

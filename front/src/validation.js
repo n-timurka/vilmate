@@ -6,17 +6,30 @@ export default {
   },
   Price: {
     required: true,
-    numeric: true,
+    regex: '^([0-9.]+)$',
     min_value: 0
   },
   Area: {
     required: true,
-    numeric: true,
+    regex: '^([0-9.]+)$',
     min_value: 0
+  },
+  Country: {
+    required: true,
+    alpha_spaces: true,
+    max: 25
+  },
+  City: {
+    required: true,
+    regex: '^([a-zA-Z- ]+)$',
+    max: 25
+  },
+  Postal: {
+    numeric: true
   },
   Address: {
     required: true,
-    alpha_num: true,
+    regex: '^([a-zA-Z0-9, ]+)$',
     max: 255
   },
   Latitude: {
@@ -35,7 +48,7 @@ export default {
     max: 25
   },
   Phone: {
-    numeric: true
+    regex: '^([0-9+() ]+)$'
   },
   Photo: {
     image: true
