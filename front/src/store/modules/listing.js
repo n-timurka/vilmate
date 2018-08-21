@@ -68,7 +68,6 @@ const actions = {
     state.loading = true
     return new Promise((resolve, reject) => {
       api.getListing(id).then((response) => {
-        console.log(response)
         state.loading = false
         resolve(response.data)
       }).catch((error) => {
@@ -124,7 +123,7 @@ const mutations = {
     state.all.unshift(listing)
   },
   updateListing (state, listing) {
-    state.all[state.all.indexOf(listing)] = listing
+    state.all[state.all.findIndex(item => item.id === listing.id)] = listing
   },
   deleteListing (state, listing) {
     state.all.splice(state.all.indexOf(listing), 1)

@@ -57,6 +57,7 @@ export default {
       this.$store.dispatch('editListing', this.listing).then(() => {
         this.message = 'Listing updated successfully!'
         this.result = 'success'
+        this.$router.push('/')
       }).catch((error) => {
         this.message = error.response.data.message
         this.errors = error.response.data.errors

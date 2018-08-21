@@ -18,7 +18,6 @@ class API {
             return response('OK', 200, $headers);
         }
         
-        Log::info($request->method() . ' ' . $request->path(), ['request' => $request->all()]);
         $response = $next($request);
         foreach ($headers as $key => $value)
             $response->header($key, $value);
